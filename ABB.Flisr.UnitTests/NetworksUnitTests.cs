@@ -19,6 +19,7 @@ namespace ABB.Flisr.UnitTests
 
             INetworksService networksService = new FakeNetworksService();
 
+
             // Acts
             Network network = networksService.Get(networkId);
 

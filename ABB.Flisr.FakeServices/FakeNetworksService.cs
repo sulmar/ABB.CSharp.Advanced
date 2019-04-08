@@ -55,6 +55,12 @@ namespace ABB.Flisr.FakeServices
         }
 
 
+        public void Hello()
+        {
+
+        }
+
+
         public void Fault()
         {
             throw new NotImplementedException();
