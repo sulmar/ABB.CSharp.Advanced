@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 
 namespace ABB.Flisr.Models
 {
-    public class Class1
+    public abstract class Base
     {
     }
 }
