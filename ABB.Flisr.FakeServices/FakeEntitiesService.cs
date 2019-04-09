@@ -17,26 +17,16 @@ namespace ABB.Flisr.FakeServices
         //    return new TEntity();
         //}
 
-        public void Add(TEntity entity)
-        {
-            entities.Add(entity);
-        }
-    
-        public IEnumerable<TEntity> Get()
-        {
-            return entities;
-        }
+        public void Add(TEntity entity) => entities.Add(entity);
+
+        public IEnumerable<TEntity> Get() => entities.Where(e => e.Id > 0).ToList();
 
         public TEntity Get(int id)
         {
             return entities.SingleOrDefault(p => p.Id == id);
         }
 
-        public virtual void Remove(int id)
-        {
-            TEntity entity = Get(id);
-            entities.Remove(entity);
-        }
+        public virtual void Remove(int id) => entities.Remove(Get(id));
 
         public void Update(TEntity entity)
         {
