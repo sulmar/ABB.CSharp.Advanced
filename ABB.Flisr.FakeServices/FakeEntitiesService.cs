@@ -10,7 +10,7 @@ namespace ABB.Flisr.FakeServices
         where TEntity : Base
         
     {
-        private ICollection<TEntity> entities;
+        protected ICollection<TEntity> entities;
 
         //public TEntity Create()
         //{

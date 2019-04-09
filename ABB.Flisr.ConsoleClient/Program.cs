@@ -73,6 +73,8 @@ namespace ABB.Flisr.ConsoleClient
 
             printer.Cost += CalculateCost;
 
+    
+
             printer.Print("Hello World", 2);
         }
 
