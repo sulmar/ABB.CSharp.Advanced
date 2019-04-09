@@ -70,5 +70,25 @@ namespace ABB.Flisr.FakeServices
         {
             return networks.SingleOrDefault(n => n.Id == id);
         }
+
+        public IEnumerable<Network> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Network entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Network entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace ABB.Flisr.Models
 {
     public class Network : Base
     {
-        public int Id { get; set; }
+ 
         public string Name { get; set; }
 
         public float VoltageLevel { get; set; }

@@ -3,10 +3,8 @@ using System;
 
 namespace ABB.Flisr.IServices
 {
-    public interface INetworksService
+    public interface INetworksService : IEntitiesService<Network>
     {
-        Network Get(int id);
-
         void Fault();
     }
 
