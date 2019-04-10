@@ -6,6 +6,7 @@ using Autofac;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +15,28 @@ namespace ABB.Flisr.NetworkClient
 {
     class Program
     {
+        static void Send(string message)
+        {
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} sending...");
+
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+
+            Console.WriteLine(message);
+        }
+
         static void Main(string[] args)
         {
             //  DependencyInjectionTest();
 
-            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+            //  SyncTest();
+
+            //  AsyncTest();
+
+            // AsyncAwaitTest();
+
+            // AsyncAwaitProgressTest();
+
+            AsyncAwaitProgressCancellationTest();
 
             //  ThreadTest();
 
@@ -29,7 +47,7 @@ namespace ABB.Flisr.NetworkClient
             //    Task.Run(()=>Calculate());
             //}
 
- //           TasksTest();
+            // ParallelTasksTest();
 
             // task list
 
@@ -58,7 +76,87 @@ namespace ABB.Flisr.NetworkClient
 
         }
 
-        private static void TasksTest()
+      
+
+        private static void AsyncTest()
+        {
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+
+            CalculateAsync(100)
+                .ContinueWith(t => Calculate(t.Result))
+                    .ContinueWith(t => Send($"Total {t.Result}"));      
+        }
+
+        private static void SyncTest()
+        {
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+
+            decimal amount = Calculate(100);
+            amount = Calculate(amount);
+            Send($"Total {amount}");
+        }
+
+        private static async void AsyncAwaitTest()
+        {
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+
+            decimal amount = await CalculateAsync(100).ConfigureAwait(false);
+            amount = await CalculateAsync(amount);
+            await SendAsync($"Total {amount}");
+        }
+
+
+        private static async void AsyncAwaitProgressTest()
+        {
+            IProgress<int> progress = new Progress<int>(i => Console.Write($"#{Thread.CurrentThread.ManagedThreadId}"));
+            
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+
+            decimal amount = await CalculateAsync(100,  null, progress).ConfigureAwait(false);
+            amount = await CalculateAsync(amount, null, progress);
+            await SendAsync($"Total {amount}");
+        }
+
+
+        private static async void AsyncAwaitProgressCancellationTest()
+        {
+            IProgress<int> progress = new Progress<int>(i => Console.Write($"#{Thread.CurrentThread.ManagedThreadId}"));
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+
+         //   CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource();
+
+        //    cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(3));
+
+            try
+            {
+                decimal amount = await CalculateAsync(100, cancellationToken, progress).ConfigureAwait(false);
+                amount = await CalculateAsync(amount, cancellationToken, progress);
+                await SendAsync($"Total {amount}");
+            }
+            catch(OperationCanceledException e)
+            {
+                Console.WriteLine("Calculate cancelled.");
+            }
+
+        }
+
+        private static Task SendAsync(string message)
+        {
+            return Task.Run(() => Send(message));
+        }
+
+        private static Task<decimal> CalculateAsync(decimal amount,
+            CancellationToken? cancellationToken = null,
+            IProgress<int> progress = null)
+        {
+            return Task.Run(() => Calculate(amount, cancellationToken, progress));
+        }
+
+        private static void ParallelTasksTest()
         {
             Task<decimal> task1 = Task.Run<decimal>(() => Calculate(100));
 
@@ -118,12 +216,29 @@ namespace ABB.Flisr.NetworkClient
             Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Calculated.");
         }
 
-        private static decimal Calculate(decimal amount)
+
+        private static decimal Calculate(decimal amount,
+            CancellationToken? cancellationToken = null,
+            IProgress<int> progress = null)
         {
             Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Calculating...");
 
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+            for (int i = 0; i < 10; i++)
+            {
+                 cancellationToken?.ThrowIfCancellationRequested();
 
+                //if (cancellationToken.Value.IsCancellationRequested)
+                //{
+
+                //}
+
+                Thread.Sleep(TimeSpan.FromSeconds(0.5));
+
+                progress?.Report(i);
+            
+
+            }
+           
             Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Calculated.");
 
             return amount + 10;
