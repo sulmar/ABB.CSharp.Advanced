@@ -6,6 +6,7 @@ using Autofac;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -26,6 +27,8 @@ namespace ABB.Flisr.NetworkClient
 
         static void Main(string[] args)
         {
+          //  TaskList();
+
             //  DependencyInjectionTest();
 
             //  SyncTest();
@@ -36,7 +39,7 @@ namespace ABB.Flisr.NetworkClient
 
             // AsyncAwaitProgressTest();
 
-            AsyncAwaitProgressCancellationTest();
+// AsyncAwaitProgressCancellationTest();
 
             //  ThreadTest();
 
@@ -70,13 +73,50 @@ namespace ABB.Flisr.NetworkClient
 
             //  Calculate();
 
+            DownloadAsyncTest();
+
+       //     DownloadTest();
+
             Console.WriteLine("Press any key to exit.");
 
             Console.ReadKey();
 
         }
 
-      
+
+        private static void DownloadTest()
+        {
+            WebClient client = new WebClient();
+            string url = "http://www.abb.com";
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} downloading...");
+
+            string content = client.DownloadString(url);
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} downloaded {content}");     
+        }
+
+        private static async Task DownloadAsyncTest()
+        {
+            WebClient client = new WebClient();
+            string url = "http://www.abb.com";
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} downloading...");
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(0.1));
+            CancellationToken cancellationToken = cancellationTokenSource.Token;         
+            
+            cancellationToken.Register(()=>client.CancelAsync());
+
+            await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+
+            string content = await client.DownloadStringTaskAsync(new Uri(url));
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} downloaded {content}");
+        }
+
+
+
 
         private static void AsyncTest()
         {
@@ -96,7 +136,7 @@ namespace ABB.Flisr.NetworkClient
             Send($"Total {amount}");
         }
 
-        private static async void AsyncAwaitTest()
+        private static async Task AsyncAwaitTest()
         {
             Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId}");
 
@@ -175,9 +215,11 @@ namespace ABB.Flisr.NetworkClient
 
             Task task3 = new Task(() => Send());
             Task<decimal> task4 = new Task<decimal>(() => Calculate(100));
+            Task<decimal> task5 = new Task<decimal>(() => Calculate(200));
 
             tasks.Add(task3);
             tasks.Add(task4);
+            tasks.Add(task5);
 
             foreach (var task in tasks)
             {
@@ -185,6 +227,9 @@ namespace ABB.Flisr.NetworkClient
             }
 
             Task.WhenAll(tasks).Wait();
+           
+            var total = tasks.OfType<Task<decimal>>().Sum(t => t.Result);
+
         }
 
         private static void ThreadPoolTest()
