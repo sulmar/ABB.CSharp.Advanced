@@ -108,7 +108,7 @@ namespace ABB.Flisr.NetworkClient
             
             cancellationToken.Register(()=>client.CancelAsync());
 
-            await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+        //    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 
             string content = await client.DownloadStringTaskAsync(new Uri(url));
 
