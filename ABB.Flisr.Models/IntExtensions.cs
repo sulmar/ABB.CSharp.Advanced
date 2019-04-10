@@ -7,10 +7,10 @@ namespace ABB.Flisr.Models
 {
     public static class Extensions
     {
-        //public static IEnumerable<T> ToEnumerable<T>(this T number)
-        //{
-        //    return new List<T> { number };
-        //}
+        public static IEnumerable<T> ToEnumerable<T>(this T number)
+        {
+            return new List<T> { number };
+        }
 
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item)
         {

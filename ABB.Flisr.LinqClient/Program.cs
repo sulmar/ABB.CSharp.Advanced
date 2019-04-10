@@ -36,10 +36,85 @@ namespace ABB.Flisr.LinqClient
             //    Console.WriteLine(item.FullName);
             //}
 
+            SetsTest();
+
+            SetEmployeesTest();
 
             Console.WriteLine("Press any key to exit.");
 
             Console.ReadKey();
+        }
+
+        private static void SetEmployeesTest()
+        {
+            var usersA = new[]
+            {
+                new { FirstName = "Marcin", City = "Krakow"},
+                new { FirstName = "Przemek", City = "Krakow"},
+                new { FirstName = "Michal", City = "Krakow"},
+                new { FirstName = "Pawel", City = "Krakow"},
+            };
+
+            var usersB = new[]
+           {
+                new { FirstName = "Marcin", City = "Warszawa"},
+                new { FirstName = "Przemek", City = "Krakow"},
+                new { FirstName = "Michal", City = "Majorka"},
+                new { FirstName = "Pawel", City = "Krakow"},
+            };
+
+            bool allInKrakow = usersB.All(u => u.City == "Krakow");
+
+
+            // zla praktyka
+            // bool inMajorka = usersB.Where(u => u.City == "Majorka").Count() > 0;
+
+            bool inMajorka = usersB.Any(u => u.City == "Majorka");
+
+            var q = usersA
+                .Join(usersB,
+                    inner => new { inner.FirstName },
+                    outer => new { outer.FirstName },
+                    (inner, outer) => new { inner.FirstName, OldCity = inner.City, NewCity = outer.City });
+
+
+            var unchanged3 = q.Where(u => u.OldCity != u.NewCity);
+
+
+
+            var unchanged2 = usersA
+                .Join(usersB,
+                    inner => new { inner.FirstName, inner.City },
+                    outer => new { outer.FirstName, outer.City },
+                    (inner, outer) => inner);
+                                
+            var unchanged = from inner in usersA
+                            join outer in usersB
+                            on new { inner.FirstName, inner.City } 
+                                equals new { outer.FirstName, outer.City }
+                            select  inner;
+
+            var changed = usersB.Except(unchanged);  
+
+           
+         
+
+
+        }
+        
+
+        private static void SetsTest()
+        {
+            var numbers = Enumerable.Range(1, 50);
+
+            var happyNumbers = Enumerable.Range(45, 10);
+
+            var common = numbers.Intersect(happyNumbers);
+
+            var unhappyNumbers = numbers.Except(happyNumbers);
+
+           
+
         }
 
         private static void ZipTest2()
