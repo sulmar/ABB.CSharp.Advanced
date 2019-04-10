@@ -9,13 +9,13 @@ namespace ABB.Flisr.FakeServices
 
     public class FakeUsersService : FakeEntitiesService<User>, IUsersService
     {
-        private UserFaker userFaker;
+        private readonly UserFaker userFaker;
 
-        public FakeUsersService()
+        public FakeUsersService(UserFaker userFaker, int count = 10)
         {
-            userFaker = new UserFaker();
+            this.userFaker = userFaker;
 
-            this.entities = userFaker.Generate(100);
+            this.entities = userFaker.Generate(count);
         }
     }
 }

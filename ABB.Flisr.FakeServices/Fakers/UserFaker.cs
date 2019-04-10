@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ABB.Flisr.FakeServices.Fakers
 {
-    class UserFaker : Faker<User>
+    public class UserFaker : Faker<User>
     {
 
         public UserFaker()
