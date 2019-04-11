@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bogus, Version=26.0.2.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bogus.26.0.2\lib\net40\Bogus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -124,9 +127,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\SecretKeyMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +147,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ABB.Flisr.FakeServices\ABB.Flisr.FakeServices.csproj">
+      <Project>{7DBCC460-F067-4D24-AC0C-A7B2F97848FD}</Project>
+      <Name>ABB.Flisr.FakeServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABB.Flisr.IServices\ABB.Flisr.IServices.csproj">
+      <Project>{F0B107B6-3CEA-484E-B82E-0513B6A5AE6D}</Project>
+      <Name>ABB.Flisr.IServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABB.Flisr.Models\ABB.Flisr.Models.csproj">
+      <Project>{3F60998D-5143-4779-8799-92FB75AE2434}</Project>
+      <Name>ABB.Flisr.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
