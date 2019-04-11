@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABB.Flisr.LinqClient", "ABB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABB.Flisr.NetworkClient", "ABB.Flisr.NetworkClient\ABB.Flisr.NetworkClient.csproj", "{4D646B16-CCF1-46C2-8656-B7AE7F33E6FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABB.Flisr.WebService", "ABB.Flisr.WebService\ABB.Flisr.WebService.csproj", "{1D812C10-FB55-40B6-A55F-BE17EB7CDB13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{4D646B16-CCF1-46C2-8656-B7AE7F33E6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D646B16-CCF1-46C2-8656-B7AE7F33E6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D646B16-CCF1-46C2-8656-B7AE7F33E6FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D812C10-FB55-40B6-A55F-BE17EB7CDB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D812C10-FB55-40B6-A55F-BE17EB7CDB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D812C10-FB55-40B6-A55F-BE17EB7CDB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D812C10-FB55-40B6-A55F-BE17EB7CDB13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
