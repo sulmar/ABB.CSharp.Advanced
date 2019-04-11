@@ -16,6 +16,32 @@ namespace ABB.Flisr.ConsoleClient
         static void Main(string[] args)
         {
 
+            FluentApiTest.FluentTest();
+
+            FluentApiTest.StandardStyleTest();
+
+            ReflectionsTest.ActivateTest();
+
+            ReflectionsTest.ReflectionTest();
+            
+            DynamicTests.DynamicTest();
+
+            DynamicTests.ExpandoObjectTest();
+
+            ConcurrentCollectionTests.BlockingCollectionTest();
+
+            LockTests lockTests = new LockTests();
+            lockTests.LockTest();
+
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+
+
+            return;
+
+
+
             Calculator calculator = new Calculator();
 
             calculator.Log += Sender.SendSms;

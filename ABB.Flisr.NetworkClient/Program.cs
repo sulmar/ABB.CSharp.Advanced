@@ -83,6 +83,16 @@ namespace ABB.Flisr.NetworkClient
 
         }
 
+        private static void CallbackDownloadTest()
+        {
+            WebClient client = new WebClient();
+            string url = "http://www.abb.com";
+
+
+
+
+        }
+
 
         private static void DownloadTest()
         {

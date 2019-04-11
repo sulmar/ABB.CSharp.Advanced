@@ -43,11 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcurrentCollectionTests.cs" />
+    <Compile Include="DynamicTests.cs" />
+    <Compile Include="FluentApiTest.cs" />
+    <Compile Include="LockTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ABB.Flisr.Models\ABB.Flisr.Models.csproj">
+      <Project>{3F60998D-5143-4779-8799-92FB75AE2434}</Project>
+      <Name>ABB.Flisr.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
