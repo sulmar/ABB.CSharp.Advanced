@@ -17,9 +17,42 @@ namespace ReactiveClient
             var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
             var source = Observable.Interval(TimeSpan.FromSeconds(1))
-                .Select(t => cpuCounter.NextValue());
+                .Take(30)
+                .DistinctUntilChanged()
+                .Select(t => cpuCounter.NextValue())
+                .Publish();
 
-            source.Subscribe(new MyObserver("Marcin"));
+            source.Subscribe(new MyObserver("CPU"));
+
+            source.Buffer(3)
+                .Subscribe(cpus => Console.WriteLine($"[AVG] {cpus.Average()}"));
+
+            source.Buffer(TimeSpan.FromSeconds(5))
+              .Subscribe(cpus => Console.WriteLine($"[AVG 5 sec] {cpus.Average()}"));
+
+         //   source.Join()
+
+          //  Observable.Merge()
+
+            source
+                .Where(cpu=>cpu>7)
+                .Subscribe(cpu =>
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[ALERT] {cpu}");
+                    Console.ResetColor();
+
+                
+                });
+
+
+            source.Take(3)
+                .Subscribe(cpu => Console.WriteLine($"[TAKE] {cpu}"));
+
+            source.TakeLast(3).Subscribe(last=>Console.WriteLine($"[LAST] {last}"));
+
+
+            source.Connect();
 
         }
 

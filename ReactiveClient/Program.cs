@@ -17,7 +17,7 @@ namespace ReactiveClient
             SubjectTest.CPUMonitorTest();   
 
 
-            SubjectTest.IntervalTest();
+          //  SubjectTest.IntervalTest();
 
             Console.WriteLine("Press any key to exit.");
 
