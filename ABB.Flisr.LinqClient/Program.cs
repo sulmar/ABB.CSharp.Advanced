@@ -1,4 +1,5 @@
 ﻿using ABB.Flisr.FakeServices;
+using ABB.Flisr.FakeServices.Fakers;
 using ABB.Flisr.IServices;
 using ABB.Flisr.Models;
 using System;
@@ -177,7 +178,7 @@ namespace ABB.Flisr.LinqClient
 
         private static void LinqTest()
         {
-            IUsersService usersService = new FakeUsersService();
+            IUsersService usersService = new FakeUsersService(new UserFaker());
 
             var users = usersService.Get();
 
