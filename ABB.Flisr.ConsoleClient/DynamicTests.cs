@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace ABB.Flisr.ConsoleClient
 {
+    [Author("Marcin", "Sulecki")]
     class DynamicTests
     {
+     
         public static void DynamicTest()
         {
             dynamic x = 100;
